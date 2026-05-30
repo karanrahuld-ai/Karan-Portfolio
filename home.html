@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Karanrahul D | CAD Engineer — Precision Drafting</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* LIGHT THEME — clean white background, high-contrast black text */
+    :root {
+      --bg-primary: #ffffff;
+      --bg-elevated: #f8f8f8;
+      --bg-card: #fefefe;
+      --surface-muted: #f2f2f2;
+      --border-subtle: #eaeaea;
+      --text-primary: #000000;
+      --text-secondary: #2c2c2c;
+      --text-muted: #5a5a5a;
+      --accent-bright: #c85a1c;
+      --accent-glow: #d46b2e;
+      --accent-dim: #b04a14;
+      --accent-border: rgba(200, 90, 28, 0.25);
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'Space Grotesk', 'SF Mono', monospace;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-weight: 400;
+      line-height: 1.5;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* refined custom cursor (discreet, dark stroke for light bg) */
+    .custom-cursor {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: var(--accent-bright);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 42px;
+      height: 42px;
+      border: 1.5px solid var(--accent-bright);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: all 0.15s ease-out;
+      opacity: 0.55;
+    }
+
+    /* smooth global transitions */
+    a, button, .btn, .skill-card, .exp-item, .edu-card, .ach-card {
+      transition: all 0.25s ease;
+    }
+
+    /* NAVIGATION (light bar + subtle blur) */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(14px);
+      background: rgba(255, 255, 255, 0.85);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      text-decoration: none;
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.8rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent-bright); }
+
+    /* hero section (white background, black text) */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      padding: 0 5% 0 5%;
+      align-items: center;
+      position: relative;
+      background: var(--bg-primary);
+    }
+    .hero-left {
+      padding: 2rem 0;
+    }
+    .hero-tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-bright);
+      margin-bottom: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .hero-tag::before {
+      content: '';
+      width: 38px;
+      height: 2px;
+      background: var(--accent-bright);
+    }
+    .hero-name {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: clamp(3.5rem, 9vw, 6rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 1.2rem;
+    }
+    .hero-name span {
+      color: var(--accent-bright);
+      display: inline-block;
+      font-weight: 700;
+    }
+    .hero-bio {
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+    }
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.8rem 1.8rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 40px;
+      transition: 0.25s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--accent-bright);
+      color: white;
+      border: none;
+    }
+    .btn-primary:hover {
+      background: var(--accent-glow);
+      transform: scale(1.02);
+      box-shadow: 0 8px 18px rgba(200, 90, 28, 0.2);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent-bright);
+      color: var(--accent-bright);
+      background: rgba(200, 90, 28, 0.05);
+    }
+
+    .hero-right {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .hero-stats {
+      background: rgba(248, 248, 248, 0.9);
+      backdrop-filter: blur(8px);
+      padding: 2rem 2rem;
+      border-radius: 32px;
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      min-width: 180px;
+    }
+    .stat {
+      text-align: left;
+    }
+    .stat-num {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 2.2rem;
+      color: var(--accent-bright);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-weight: 500;
+    }
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 5%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+    }
+    .scroll-hint::before {
+      content: '';
+      width: 1px;
+      height: 36px;
+      background: var(--accent-bright);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.3; transform: scaleY(0.7);}
+      50% { opacity: 1; transform: scaleY(1);}
+      100% { opacity: 0.3; transform: scaleY(0.7);}
+    }
+
+    /* SECTION STYLES */
+    section {
+      padding: 6rem 5%;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+    }
+    .section-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent-bright);
+      background: rgba(200, 90, 28, 0.1);
+      padding: 0.2rem 0.7rem;
+      border-radius: 24px;
+    }
+    .section-title {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    /* about */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: 3rem;
+    }
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      margin-bottom: 1.2rem;
+    }
+    .about-text strong {
+      color: var(--accent-bright);
+      font-weight: 700;
+    }
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .detail-key {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .detail-val {
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* skills grid */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--border-subtle);
+    }
+    .skill-card {
+      background: var(--bg-card);
+      padding: 2rem 1.8rem;
+      transition: all 0.25s;
+    }
+    .skill-card:hover {
+      background: #fafafa;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.02);
+    }
+    .skill-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .skill-cat {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--accent-bright);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .skill-name {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .tag {
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      border: 1px solid var(--border-subtle);
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* experience */
+    .exp-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .exp-item {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 2rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .exp-date {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent-bright);
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+    .exp-company {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-top: 0.3rem;
+      color: var(--text-primary);
+    }
+    .exp-loc {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+    .exp-role {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+    .exp-bullets {
+      list-style: none;
+    }
+    .exp-bullets li {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.7rem;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .exp-bullets li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent-bright);
+    }
+
+    /* education cards */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-subtle);
+    }
+    .edu-card {
+      background: var(--bg-card);
+      padding: 2rem 1.8rem;
+    }
+    .edu-year {
+      color: var(--accent-bright);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+    }
+    .edu-degree {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin: 0.8rem 0 0.4rem;
+      color: var(--text-primary);
+    }
+    .edu-school {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .edu-result {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      border: 1px solid var(--accent-border);
+      display: inline-block;
+      padding: 0.2rem 1rem;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    /* achievements */
+    .ach-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border-subtle);
+    }
+    .ach-card {
+      background: var(--bg-elevated);
+      padding: 2.5rem;
+    }
+    .ach-num {
+      font-family: var(--font-mono);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--accent-dim);
+      opacity: 0.4;
+      line-height: 1;
+    }
+    .ach-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: 0.8rem 0 0.5rem;
+      color: var(--text-primary);
+    }
+    .ach-desc {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    /* projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .project-card {
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      transition: all 0.25s ease;
+    }
+    .project-card:hover {
+      box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+    }
+    .project-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+      cursor: pointer;
+    }
+    .project-card:hover .project-img {
+      transform: scale(1.04);
+    }
+
+    /* Modal for Image View */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+    }
+    .modal-content {
+      margin: auto;
+      display: block;
+      width: 90%;
+      max-width: 1000px;
+      border-radius: 8px;
+      animation: zoomIn 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+    }
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+    .modal-close:hover {
+      color: var(--accent-bright);
+    }
+    @keyframes zoomIn {
+      from {transform: scale(0.95); opacity: 0;}
+      to {transform: scale(1); opacity: 1;}
+    }
+
+    /* contact — light background, dark text */
+    #contact {
+      background: #fcfcfc;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .contact-heading {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      line-height: 1.2;
+      color: var(--text-primary);
+    }
+    .contact-item {
+      margin-bottom: 1.6rem;
+    }
+    .contact-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-bright);
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+    }
+    .contact-value {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--border-subtle);
+      padding-bottom: 2px;
+    }
+    .contact-value:hover {
+      color: var(--accent-bright);
+      border-color: var(--accent-bright);
+    }
+
+    footer {
+      background: var(--bg-primary);
+      padding: 2rem 5%;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    /* reveal animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* responsive */
+    @media (max-width: 880px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; gap: 3rem; }
+      .hero-right { justify-content: center; }
+      .hero-stats { flex-direction: row; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+      .about-grid { grid-template-columns: 1fr; }
+      .exp-item { grid-template-columns: 1fr; gap: 1rem; }
+      .edu-grid, .ach-grid, .skills-grid { grid-template-columns: 1fr; gap: 1px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+      footer { flex-direction: column; gap: 1rem; align-items: center; text-align: center; }
+      section { padding: 4rem 1.5rem; }
+    }
+
+    /* white bg selection */
+    ::selection {
+      background: var(--accent-bright);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="custom-cursor" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="#hero" class="nav-logo">KARANRAHUL D</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#projectgallery">Project Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-tag">CAD Engineer | B.E. Graduate</div>
+    <h1 class="hero-name">Karanrahul <span>D</span></h1>
+    <p class="hero-bio">Precision-driven AutoCAD specialist & site engineer. Transforming complex blueprints into real-world infrastructure — stretch ceilings, Mivan marking, and beyond.</p>
+    <div class="btn-group">
+      <a href="#experience" class="btn btn-primary">View Portfolio</a>
+      <a href="#contact" class="btn btn-outline">Connect</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Years Exp.</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">AutoCAD</div>
+        <div class="stat-label">Expert 2D</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">B.E.</div>
+        <div class="stat-label">Civil Engineering</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">EXPLORE WORK</div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Background</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I'm <strong>Karanrahul D, a CAD Engineer</strong> with a Bachelor's degree and deep expertise in <strong>AutoCAD drafting, site execution, and technical coordination</strong>. My work bridges detailed shop drawings with on-site feasibility — reducing errors and optimizing material usage.</p>
+      <p>From designing <strong>stretch ceiling systems with LED integration</strong> to leading Mivan formwork marking and excavation leveling, I ensure every drawing translates into flawless built form. Collaborative and process-driven, I align with architects, contractors, and project managers to deliver precision outcomes.</p>
+      <p>Currently working at <strong>Euroceil System</strong> engineering complex ceiling solutions while also offering freelance consultancy for infrastructure drafting.</p>
+    </div>
+    <div class="about-details reveal">
+      <div class="detail-row"><span class="detail-key">Location</span><span class="detail-val">India</span></div>
+      <div class="detail-row"><span class="detail-key">Phone</span><span class="detail-val">+91 9677688513</span></div>
+      <div class="detail-row"><span class="detail-key">Email</span><span class="detail-val">karanrahuld@gmail.com</span></div>
+      <div class="detail-row"><span class="detail-key">Birth</span><span class="detail-val">29 Oct 1999</span></div>
+      <div class="detail-row"><span class="detail-key">Languages</span><span class="detail-val">English, Tamil</span></div>
+      <div class="detail-row"><span class="detail-key">Interests</span><span class="detail-val">Tech, Handball</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Core competencies</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card reveal"><div class="skill-icon">⚡</div><div class="skill-cat">Drafting</div><div class="skill-name">AutoCAD 2D</div><div class="skill-tags"><span class="tag">Shop Drawings</span><span class="tag">Layouts</span><span class="tag">As-built</span></div></div>
+    <div class="skill-card reveal"><div class="skill-icon">🏗️</div><div class="skill-cat">Site Eng.</div><div class="skill-name">Mivan & Marking</div><div class="skill-tags"><span class="tag">Total Station</span><span class="tag">Auto Level</span><span class="tag">Excavation</span></div></div>
+    <div class="skill-card reveal"><div class="skill-icon">🎨</div><div class="skill-cat">Specialty</div><div class="skill-name">Stretch Ceilings</div><div class="skill-tags"><span class="tag">PVC / Fabric</span><span class="tag">LED Integration</span><span class="tag">Harpoon</span></div></div>
+    <div class="skill-card reveal"><div class="skill-icon">📐</div><div class="skill-cat">Technical</div><div class="skill-name">Material Estimation</div><div class="skill-tags"><span class="tag">BOQ</span><span class="tag">Takeoffs</span><span class="tag">Optimization</span></div></div>
+    <div class="skill-card reveal"><div class="skill-icon">🤝</div><div class="skill-cat">Soft</div><div class="skill-name">Coordination</div><div class="skill-tags"><span class="tag">Client Handling</span><span class="tag">Team Leading</span><span class="tag">Progress Tracking</span></div></div>
+    <div class="skill-card reveal"><div class="skill-icon">💡</div><div class="skill-cat">Innovation</div><div class="skill-name">Tech Exploration</div><div class="skill-tags"><span class="tag">Emerging Tech</span><span class="tag">Design Optimization</span></div></div>
+  </div>
+</section>
+
+<!-- Experience -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Professional journey</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="exp-list">
+    <div class="exp-item reveal"><div class="exp-left"><div class="exp-date">Apr 2025 – present</div><div class="exp-company">Euroceil System</div><div class="exp-loc">India</div></div><div class="exp-right"><div class="exp-role">CAD Engineer</div><ul class="exp-bullets"><li>Develop 2D layouts for stretch ceilings, backlit & printed finishes.</li><li>Precise shop drawings for harpoon & aluminum profiles, LED integration diagrams.</li><li>Site measurement & coordination, material estimation to reduce waste.</li><li>Ensure compliance with fire safety & acoustic codes.</li></ul></div></div>
+    <div class="exp-item reveal"><div class="exp-left"><div class="exp-date">Apr 2024 – Dec 2024</div><div class="exp-company">Sobha Pvt Ltd</div><div class="exp-loc">India</div></div><div class="exp-right"><div class="exp-role">Site Engineer</div><ul class="exp-bullets"><li>Excavation leveling & depth control using Auto Level for foundation accuracy.</li><li>Mivan formwork marking, shear wall alignment, door/window openings.</li><li>Total Station based coordinate management for slab levelling.</li></ul></div></div>
+    <div class="exp-item reveal"><div class="exp-left"><div class="exp-date">Dec 2022 – Jul 2023</div><div class="exp-company">Manisha Builders</div><div class="exp-loc">India</div></div><div class="exp-right"><div class="exp-role">Intern Engineer</div><ul class="exp-bullets"><li>Prepared project drawings and specifications with AutoCAD.</li><li>Resource allocation (manpower, materials) and daily progress reporting.</li><li>Client coordination to meet project deliverables.</li></ul></div></div>
+    <div class="exp-item reveal"><div class="exp-left"><div class="exp-date">Ongoing</div><div class="exp-company">Freelance</div><div class="exp-loc">Remote</div></div><div class="exp-right"><div class="exp-role">Consultant Engineer</div><ul class="exp-bullets"><li>Technical drafting and infrastructure consultancy for independent construction projects.</li></ul></div></div>
+  </div>
+</section>
+
+<!-- Education -->
+<section id="education">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Education</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card reveal"><div class="edu-year">2022</div><div class="edu-degree">B.E. Civil Engineering</div><div class="edu-school">Hindusthan College, Coimbatore (Anna University)</div><div class="edu-result">CGPA 7.56</div></div>
+    <div class="edu-card reveal"><div class="edu-year">2018</div><div class="edu-degree">HSC (12th)</div><div class="edu-school">Bharath Matric Hr. Sec. School, Krishnagiri</div><div class="edu-result">60%</div></div>
+    <div class="edu-card reveal"><div class="edu-year">2016</div><div class="edu-degree">SSLC (10th)</div><div class="edu-school">Bharath Matric Hr. Sec. School</div><div class="edu-result">70.6%</div></div>
+  </div>
+</section>
+
+<!-- Achievements -->
+<section id="achievements">
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Achievements</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="ach-grid">
+    <div class="ach-card reveal"><div class="ach-num">01</div><div class="ach-title">🏆 Zonal Handball Winner</div><div class="ach-desc">2nd Prize in Zonal Level Handball Competition, Coimbatore 2019 — demonstrating leadership and team synergy.</div></div>
+    <div class="ach-card reveal"><div class="ach-num">02</div><div class="ach-title">💡 Technology Enthusiast</div><div class="ach-desc">Constantly upskilling in emerging tech, integrating modern tools into engineering workflows.</div></div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projectgallery">
+  <div class="section-header reveal">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Project Gallery</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <img src="assets/image.png" alt="Project 1" class="project-img">
+    </div>
+    <div class="project-card reveal">
+      <img src="assets/image1.jpeg" alt="Project 2" class="project-img">
+    </div>
+    <div class="project-card reveal">
+      <img src="assets/image2.png" alt="Project 3" class="project-img">
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="reveal"><div class="contact-heading">Collaborate on precision engineering</div></div>
+    <div class="contact-links reveal">
+      <div class="contact-item"><span class="contact-label">Email</span><a href="mailto:karanrahuld@gmail.com" class="contact-value">karanrahuld@gmail.com</a></div>
+      <div class="contact-item"><span class="contact-label">Phone / WhatsApp</span><a href="tel:+919677688513" class="contact-value">+91 9677688513</a></div>
+      <div class="contact-item"><span class="contact-label">Location</span><span class="contact-value">India (open to remote/freelance)</span></div>
+      <div class="contact-item"><span class="contact-label">Availability</span><span class="contact-value">Full-time / Contract</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Karanrahul D — CAD Engineer & B.E. Graduate</p>
+  <p>Designed with precision • Clean light aesthetic</p>
+</footer>
+
+<!-- Image Modal -->
+<div id="imageModal" class="modal">
+  <span class="modal-close">&times;</span>
+  <img class="modal-content" id="modalImg">
+</div>
+
+<script>
+  // custom cursor
+  const dot = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dot.style.left = mouseX + 'px';
+    dot.style.top = mouseY + 'px';
+  });
+
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ring.style.left = ringX + 'px';
+    ring.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // reveal on scroll
+  const allReveal = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -30px 0px" });
+  allReveal.forEach(el => observer.observe(el));
+
+  // staggered delay for cards
+  document.querySelectorAll('.skill-card, .edu-card, .ach-card, .exp-item').forEach((el, idx) => {
+    el.style.transitionDelay = (idx * 0.05) + 's';
+  });
+
+  // Image Modal
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImg");
+  const closeBtn = document.querySelector(".modal-close");
+  
+  document.querySelectorAll(".project-img").forEach(img => {
+    img.addEventListener("click", function() {
+      modal.style.display = "block";
+      modalImg.src = this.src;
+    });
+  });
+  
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+  
+  modal.addEventListener("click", (e) => {
+    if(e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+</script>
+</body>
+</html>
